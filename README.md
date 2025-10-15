@@ -8,14 +8,14 @@
 
 # Iniciando a coleta de dados
 
-## Agentes IA Fiap
+# 🌿 FarmTech Solutions - Sistema de Irrigação Inteligente (Fase 2)
 
 ## 👨‍🎓 Integrantes: 
 - <a href="https://www.linkedin.com/in/daniel-baião-0b351049/">Daniel Emilio Baião</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/company/inova-fusca">Nome do integrante 5</a>
+- <a href="https://www.linkedin.com/company/inova-fusca">Erik Criscuolo</a>
+- <a href="https://www.linkedin.com/company/inova-fusca">Marcus Vinícius Loureiro Garcia</a> 
+- <a href="https://www.linkedin.com/company/inova-fusca">Sidney William de Paula Dias,</a> 
+- <a href="https://www.linkedin.com/company/inova-fusca">Hugo Rodrigues Carvalho Silva</a>
 
 ## 👩‍🏫 Professores:
 ### Tutor(a) 
@@ -24,55 +24,126 @@
 - <a href="https://www.linkedin.com/company/inova-fusca">André Godoi Chiovato</a>
 
 
-## 📜 Descrição
+## 🎯 Objetivo do Projeto
+Desenvolver um sistema de irrigação automatizado e inteligente para a cultura do Café, utilizando um microcontrolador ESP32 (simulado via Wokwi/VS Code) para monitorar sensores virtuais (Umidade, NPK e pH). O projeto integra um pipeline avançado de IoT e Data Science para tomada de decisão e análise estatística.
 
-*Considerando como base a Fase anterior do projeto — que envolveu o cálculo de área plantada, monitoramento climático, entre outros —, a Fase 2 vai avançar no sistema de gestão agrícola da empresa FarmTech Solutions usando um dispositivo construído por você e seu grupo.
+---
 
-Agora, vamos imaginar em como podemos conectar os sensores físicos para otimizar a irrigação agrícola e criar um sistema de irrigação inteligente. Toda cultura agrícola depende, em maior ou menor proporção, de três elementos químicos: Nitrogênio (N), Fósforo (P) e Potássio (K) — o famoso NPK. Isso vai influenciar o pH da terra e, obviamente, a produtividade daquela planta. Além disso, é preciso considerar a umidade do solo, que indica o quanto choveu em um determinado período observado. Infelizmente, no Wokwi.com — plataforma onde simulamos projetos ESP32 — não há sensores exclusivamente agrícolas. Por isso, faremos simulações e algumas substituições didáticas.
+## 🍅 Cultura Agrícola e Lógica de Irrigação
+A cultura agrícola escolhida foi o **Café**. A bomba de água (Relé) só será acionada se as condições da lavoura forem adequadas **E** houver necessidade de água.
 
-No lugar dos sensores de nutrientes N, P e K, utilizaremos um botão verde em cada. Portanto, seu projeto precisa ter três botões simulando os níveis de cada elemento.
+### Lógica de Decisão (Regra para Ligar a Bomba)
+O Relé será acionado **APENAS** quando **TODAS** as seguintes condições forem verdadeiras:
 
-No lugar do sensor de pH, utilizaremos um sensor de intensidade de luz chamado LDR (Light Dependent Resistor) que trará dados analógicos da intensidade da luz, mas, para fins de simulação, vamos assumir que ele representa o pH da terra. Como referência, podemos comparar os dados analógicos do pH que variam de 0 a 14, sendo próximo de 7, pH neutro. Você também pode adotar outras escalas maiores que 0 a 14 para melhorar sua mecânica ao manipular o sensor LDR.
+- A Umidade do Solo (DHT22) estiver **ABAIXO de 60%** (Necessidade de Água)
+- **TODOS** os nutrientes N, P, e K estiverem presentes (respectivos botões pressionados)
+- O pH (LDR) estiver na faixa ideal para o Café (**5.5 a 6.5**)
+- **NÃO HOUVER** um Bloqueio Externo ativo (Decisão da API do Tempo)
 
-Quanto ao sensor de umidade, este possui um similar no Wokwi que mede a umidade do ar. Portanto, vamos adotar o DHT22 como medidor de umidade do solo (embora seja do ar na prática).
-O objetivo do projeto na Fase 2 será desenvolver um sistema de irrigação automatizado e inteligente que monitore a umidade do solo em tempo real, os níveis dos nutrientes N, P e K representados por botões (que vão “medir” os níveis como tudo ou nada, isto é, “true” ou “false”, ou em outras palavras, como botão pressionado ou não pressionado). *
+#### Tabela de Lógica e Simulação
 
+| Elemento              | Requisito da Lógica         | Simulação no Wokwi                  |
+|-----------------------|-----------------------------|-------------------------------------|
+| Nitrogênio (N)        | Presente (true)             | Botão N Pressionado                 |
+| Fósforo (P)           | Presente (true)             | Botão P Pressionado                 |
+| Potássio (K)          | Presente (true)             | Botão K Pressionado                 |
+| pH (LDR)              | 5.5-6.5 (levemente ácido).  | Potenciômetro do LDR                |
+| Umidade do Solo (DHT22)| Baixa (< 60%)              | Slider do DHT22                     |
+| Bloqueio Externo      | Ausente (0)                 | Serial Remoto (Script Python)       |
 
-## 📁 Estrutura de pastas
+---
 
-Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
-
-- <b>.github</b>: Nesta pasta ficarão os arquivos de configuração específicos do GitHub que ajudam a gerenciar e automatizar processos no repositório.
-
-- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
-
-- <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
-
-- <b>document</b>: aqui estão todos os documentos do projeto que as atividades poderão pedir. Na subpasta "other", adicione documentos complementares e menos importantes.
-
-- <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
-
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto ao longo das 7 fases.
-
-- <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
-
-## 🔧 Como executar o código
-
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
+## 🔌 Circuito, Pinos e Tecnologias
+O projeto utiliza o **ESP32 Devkit V1** simulado no Wokwi via extensão do VS Code/PlatformIO.
 
 
-## 🗃 Histórico de lançamentos
+![Diagrama de Conexões](conexoes.png)
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+**Detalhamento das Conexões:**
+
+- **Botões NPK:**
+  - Botão N: GPIO32
+  - Botão P: GPIO14
+  - Botão K: GPIO13
+  - Todos com pull-up e conectados ao GND
+
+- **Sensor pH (LDR):**
+  - Pino analógico: GPIO34
+  - VCC: 3.3V
+  - GND: GND
+
+- **Sensor DHT22:**
+  - Pino de dados: GPIO21
+  - VCC: 3.3V
+  - GND: GND
+
+- **Relé da Bomba:**
+  - Pino de controle: GPIO17
+  - VCC: 3.3V
+  - GND: GND
+
+**Tecnologias Utilizadas:** C/C++ (Arduino Framework), PlatformIO, Wokwi, Python, Bash/Shell Script, R.
+
+---
+
+## 🛠️ Pipeline Automatizado de Data Science
+Implementamos um pipeline robusto que automatiza a coleta, integração e análise de dados, eliminando a necessidade de intervenção manual para transferir logs e dados da API.
+
+###Pré requisito para o python
+- Arquivo requirements.txt está as bibliotecas necessárias para o Python
+
+### 1. Integração com API Pública (Open-Meteo)
+- **Conceito:** Suspender a irrigação se houver previsão de chuva.
+- **API Utilizada:** Open-Meteo (sem chave API)
+- **Fluxo:**
+	- O script Bash (`run_analysis.sh`) executa o script Python (`python_api/api_weather.py`)
+	- O Python consulta a Open-Meteo para obter a previsão de chuva (0 ou 1)
+	- O Bash usa a porta serial remota do Wokwi (`rfc2217://localhost:4000`) para enviar automaticamente o 0 ou 1 para o ESP32, que atualiza a variável `bloqueio_irrigacao`
+
+### 2. Análise Estatística em R
+- **Conceito:** Usar estatística para avaliar a qualidade do solo e gerar um Score de Deficiência, refinando a lógica de irrigação.
+- **Fluxo:**
+	- O script Python (`r_analysis/log_capturer.py`) captura 30 linhas de dados CSV geradas pelo ESP32, salvando em `r_analysis/esp32_log_bruto.csv`
+	- O script Python (`r_analysis/data_cleaner.py`) lê o log bruto, limpa os dados, adiciona features de Data Science (`Indice_NPK`) e salva o arquivo final (`dados_para_r.csv`)
+	- O script R (`r_analysis/data_analysis.R`) lê o arquivo limpo e executa a análise de Score de Deficiência
+
+### 3. Orquestração do Pipeline
+O script Bash (`run_analysis.sh`) gerencia todo o processo:
+1. Roda a API Python (instalando os pré requisitos necessários) e envia o resultado para o ESP32
+2. Roda o capturador de log Python para coletar os dados
+3. Roda o script de limpeza de dados Python
+4. Roda a análise estatística em R
+
+#### Execução do Pipeline
+```bash
+chmod +x run_analysis.sh
+./run_analysis.sh
+```
+
+---
+
+## 📁 Estrutura de Arquivos e Entregáveis
+
+| Arquivo/Pasta                      | Descrição                                         | Status    |
+|------------------------------------|---------------------------------------------------|-----------|
+| README.md                          | Documentação principal do projeto                 | Completo  |
+| platformio.ini                     | Configuração do ambiente ESP32                    | Entregue  |
+| wokwi.toml                         | Configuração da simulação e Serial Remota         | Entregue  |
+| diagram.json                       | Diagrama de conexões do circuito                  | Entregue  |
+| src/main.cpp                       | Código C++ do ESP32 (Lógica + Saída CSV)          | Entregue  |
+| script/python_api/api_weather.py   | Opcional 1: Lógica de decisão de chuva            | Entregue  |
+| script/r_analysis/data_analysis.R  | Opcional 2: Script de análise estatística em R    | Entregue  |
+| script/r_analysis/log_capturer.py  | Automação: Captura de log Serial                  | Entregue  |
+| script/r_analysis/data_cleaner.py  | Automação: Limpeza e integração final de dados    | Entregue  |
+| run_analysis.sh                    | Orquestrador Bash do pipeline de Data Science     | Entregue  |
+
+---
+
+## ▶️ Demonstração em Vídeo
+O vídeo deve demonstrar o funcionamento básico (sensores e relé) e a execução do pipeline de Data Science (`run_analysis.sh`).
+
+**Link do Vídeo (YouTube - Não Listado):**
+https://youtu.be/pz6-2eiDTZE
 
 ## 📋 Licença
 
