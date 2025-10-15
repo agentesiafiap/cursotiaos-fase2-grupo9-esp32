@@ -2,11 +2,11 @@
 # Script de Orquestração da Análise de Dados (Bash)
 
 # Variáveis de Caminho
-PYTHON_API="python_api/api_weather.py"
-PYTHON_CAPTURA="r_analysis/log_capturer.py"
-PYTHON_LIMPEZA="r_analysis/data_cleaner.py"
-R_ANALYSIS="r_analysis/data_analysis.R"
-REQUIREMENTS_FILE="./config/requirements.txt"
+PYTHON_API="scripts/python_api/api_weather.py"
+PYTHON_CAPTURA="scripts/r_analysis/log_capturer.py"
+PYTHON_LIMPEZA="scripts/r_analysis/data_cleaner.py"
+R_ANALYSIS="scripts/r_analysis/data_analysis.R"
+REQUIREMENTS_FILE="scripts/config/requirements.txt"
 
 # Variável para o número de linhas a capturar
 NUM_LINHAS=30
@@ -29,7 +29,7 @@ function pio_cmd {
 # ------------------------------------------------------------
 echo "--- PASSO 0.0: INSTALANDO DEPENDÊNCIAS PYTHON ---"
 if [ -f "$REQUIREMENTS_FILE" ]; then
-    python3 -m pip install -r "$REQUIREMENTS_FILE"
+    python3 -m pip install -r "$REQUIREMENTS_FILE" --break-system-packages
     if [ $? -ne 0 ]; then
         echo "ERRO: Falha na instalação das dependências Python. Verifique sua conexão ou ambiente."
         exit 1
