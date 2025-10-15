@@ -57,7 +57,7 @@ O Relé será acionado **APENAS** quando **TODAS** as seguintes condições fore
 O projeto utiliza o **ESP32 Devkit V1** simulado no Wokwi via extensão do VS Code/PlatformIO.
 
 
-![Diagrama de Conexões](conexoes.png)
+![Diagrama de Conexões](assets/conexoes.png)
 
 **Detalhamento das Conexões:**
 
